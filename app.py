@@ -679,6 +679,11 @@ def page_resultado(reporte=None, proceso=None):
 # ─── Resultado desde URL ──────────────────────────────────────────────────────
 
 def page_resultado_from_db(proceso_id: str):
+    import re
+    if not re.fullmatch(r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", proceso_id.lower()):
+        st.error("Enlace inválido.")
+        return
+
     from core.database import get_proceso, get_respuestas, get_familia
     from core.report import (calcular_puntajes, determinar_patrones,
                               generar_analisis, generar_grafico, generar_pdf)
