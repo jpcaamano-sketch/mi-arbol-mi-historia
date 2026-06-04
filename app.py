@@ -15,92 +15,64 @@ st.set_page_config(
 
 st.markdown("""
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 #MainMenu, footer, header { visibility: hidden; }
 [data-testid="stToolbarActions"], [data-testid="stDeployButton"] { display: none !important; }
 [data-testid="collapsedControl"] { display: none !important; }
+header[data-testid="stHeader"] { background: transparent !important; border-bottom: none !important; box-shadow: none !important; }
 
-html, body, [data-testid="stAppViewContainer"] {
-  background: #0f1710 !important;
+html, body, [data-testid="stAppViewContainer"], [data-testid="stMain"] {
+  background: #4E32AD !important;
 }
-[data-testid="stMain"], [data-testid="stVerticalBlock"] {
-  background: #0f1710 !important;
-}
+[data-testid="stAppViewContainer"] > .main { background: #4E32AD; }
+[data-testid="stVerticalBlock"] { background: transparent !important; }
 section[data-testid="stSidebar"] { display: none !important; }
+.block-container { max-width: 700px; padding: 2rem 1.5rem; }
 
-/* Tipografía base */
-* { font-family: Georgia, 'Times New Roman', serif; }
-h1, h2, h3 { color: #c9a040 !important; }
-p, li { color: #f0ead6; }
+* { font-family: 'Inter', sans-serif !important; }
+h1, h2, h3 { color: #DCFE77 !important; }
+p, li { color: #F0ECFF !important; }
 
-/* Inputs */
 [data-testid="stTextInput"] input,
 [data-testid="stTextArea"] textarea {
-  background: #1a1205 !important;
-  border: 1px solid #3d2b1a !important;
-  color: #f0ead6 !important;
-  border-radius: 6px !important;
-  font-family: Georgia, serif !important;
+  background: rgba(255,255,255,.1) !important;
+  color: #F0ECFF !important;
+  border: 1px solid rgba(255,255,255,.2) !important;
+  border-radius: 8px !important;
 }
 [data-testid="stTextInput"] input:focus,
 [data-testid="stTextArea"] textarea:focus {
-  border-color: #c9a040 !important;
-  box-shadow: 0 0 0 2px rgba(201,160,64,0.15) !important;
+  border-color: rgba(220,254,119,.5) !important;
+  box-shadow: 0 0 0 2px rgba(220,254,119,.1) !important;
 }
 
-/* Radio buttons */
-[data-testid="stRadio"] label {
-  color: #f0ead6 !important;
-  font-family: Georgia, serif !important;
-}
-[data-testid="stRadio"] [data-baseweb="radio"] {
-  background: transparent !important;
-}
+[data-testid="stRadio"] label { color: rgba(240,236,255,.8) !important; }
+[data-testid="stRadio"] [data-baseweb="radio"] { background: transparent !important; }
 
-/* Buttons */
 [data-testid="stButton"] > button {
-  background: #c9a040 !important;
-  color: #0f1710 !important;
-  border: none !important;
-  border-radius: 6px !important;
-  font-family: Georgia, serif !important;
-  font-weight: 700 !important;
-  font-size: 15px !important;
-  padding: 12px 32px !important;
-  width: 100% !important;
-  cursor: pointer !important;
-  transition: all 0.2s !important;
+  background: #FF6B4E !important; color: #fff !important;
+  border: none !important; border-radius: 8px !important;
+  font-weight: 700 !important; font-size: 15px !important;
+  padding: 12px 32px !important; width: 100% !important; transition: .2s !important;
 }
-[data-testid="stButton"] > button:hover {
-  background: #d4b050 !important;
-  transform: translateY(-1px) !important;
-}
+[data-testid="stButton"] > button:hover { background: #ff8570 !important; transform: translateY(-1px) !important; }
+[data-testid="stButton"] > button:disabled { background: #2B1D8A !important; color: rgba(240,236,255,.4) !important; }
 
-/* Download button */
 [data-testid="stDownloadButton"] > button {
-  background: transparent !important;
-  color: #c9a040 !important;
-  border: 1px solid #c9a040 !important;
-  border-radius: 6px !important;
-  font-family: Georgia, serif !important;
-  font-weight: 600 !important;
+  background: #2B1D8A !important; color: #DCFE77 !important;
+  border: 1px solid rgba(220,254,119,.3) !important; border-radius: 8px !important; width: 100%;
 }
 
-/* Divider */
-hr { border-color: #2d2010 !important; }
+hr { border-color: rgba(255,255,255,.1) !important; }
 
-/* Progress bar */
-[data-testid="stProgress"] > div > div {
-  background: #c9a040 !important;
-}
-[data-testid="stProgress"] > div {
-  background: #1a1205 !important;
-}
+[data-testid="stProgress"] > div { background: #2B1D8A !important; border-radius: 6px; }
+[data-testid="stProgress"] > div > div { background: #FF6B4E !important; border-radius: 6px; }
 
-/* Selectbox */
 [data-testid="stSelectbox"] select {
-  background: #1a1205 !important;
-  color: #f0ead6 !important;
-  border: 1px solid #3d2b1a !important;
+  background: rgba(255,255,255,.1) !important;
+  color: #F0ECFF !important;
+  border: 1px solid rgba(255,255,255,.2) !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -131,9 +103,9 @@ def ir_a(etapa, **kwargs):
     st.rerun()
 
 
-def box(content_html: str, color_border: str = "#2d2010"):
+def box(content_html: str, color_border: str = "rgba(220,254,119,.15)"):
     st.markdown(
-        f'<div style="background:#1a1205;border:1px solid {color_border};'
+        f'<div style="background:#2B1D8A;border:1px solid {color_border};'
         f'border-radius:10px;padding:20px 24px;margin-bottom:16px;">'
         f'{content_html}</div>',
         unsafe_allow_html=True)
@@ -144,7 +116,7 @@ def header_bloque(num_bloque: int):
     progreso = (num_bloque - 1) / 8
     st.progress(progreso)
     st.markdown(
-        f'<p style="color:#7a6a50;font-size:12px;text-align:center;margin:4px 0 20px;">'
+        f'<p style="color:rgba(240,236,255,.55);font-size:12px;text-align:center;margin:4px 0 20px;">'
         f'Bloque {num_bloque} de 8</p>',
         unsafe_allow_html=True)
     st.markdown(
@@ -160,14 +132,14 @@ def page_inicio():
 <div style="text-align:center;padding:40px 0 20px;">
   <div style="font-size:56px;margin-bottom:16px;">🌳</div>
   <h1 style="font-size:32px;margin-bottom:8px;">Mi Árbol, Mi Historia</h1>
-  <p style="color:#c9a040;font-size:16px;font-style:italic;margin-bottom:24px;">
+  <p style="color:#FF6B4E;font-size:16px;font-style:italic;margin-bottom:24px;">
     Descubre qué patrones de tus ancestros viven todavía en ti
   </p>
-  <p style="color:#b09870;font-size:14px;max-width:520px;margin:0 auto 32px;line-height:1.8;">
+  <p style="color:rgba(240,236,255,.8);font-size:14px;max-width:520px;margin:0 auto 32px;line-height:1.8;">
     Una herramienta de metagenealogía inspirada en la metodología de Alejandro Jodorowsky.
     No evalúa quién eres — explora los patrones que tu árbol ha transmitido de generación en generación.
   </p>
-  <p style="color:#7a6a50;font-size:13px;">⏱️ Tiempo estimado: 15 a 20 minutos</p>
+  <p style="color:rgba(240,236,255,.55);font-size:13px;">⏱️ Tiempo estimado: 15 a 20 minutos</p>
 </div>
 """, unsafe_allow_html=True)
 
